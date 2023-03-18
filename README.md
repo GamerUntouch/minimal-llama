@@ -19,7 +19,7 @@ First, we tokenize the data so we never have to worry about the tokenizer again.
 ```bash
 python tokenize_dataset.py \
     --tokenizer_path /path/to/tokenizer \
-    --jsonl_path /path/to/data.jsonl \
+    --text_path /path/to/data.txt \
     --save_path /path/to/tokenized_dataset \
     --max_seq_length 512
 ```
