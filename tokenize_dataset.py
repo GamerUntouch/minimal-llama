@@ -34,7 +34,7 @@ def main():
     parser.add_argument("--max_seq_length", type=int, default=2048)
     args = parser.parse_args()
 
-    tokenizer = transformers.LlamaTokenizer.from_pretrained(args.tokenizer_path)
+    tokenizer = transformers.LLaMATokenizer.from_pretrained(args.tokenizer_path)
 
 
     convert_text(args.text_path)

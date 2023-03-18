@@ -94,7 +94,7 @@ def main():
     ))
 
     print("Setup Model")
-    model = transformers.LlamaForCausalLM.from_pretrained(
+    model = transformers.LLaMAForCausalLM.from_pretrained(
         args.model_path,
         torch_dtype=torch.float16,
     )
