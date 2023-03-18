@@ -7,6 +7,17 @@ import tqdm.auto as tqdm
 import datasets
 import transformers
 
+def convert_text(path): #convert text file to jsonl
+    with open(path) as f:
+        conv_ = f.read()
+
+    conv_ = conv_.replace("\n", "\\n")
+    conv_ = conv_.replace('"', '\\"')
+
+    converted_file = open("converted.jsonl", "w")
+    converted_file.write('{"text":"'+conv_+'"}')
+    converted_file.close()
+
 
 def read_jsonl(path):
     # Manually open because .splitlines is different from iterating over lines
@@ -18,15 +29,18 @@ def read_jsonl(path):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--tokenizer_path", type=str)
-    parser.add_argument("--jsonl_path", type=str)
+    parser.add_argument("--text_path", type=str)
     parser.add_argument("--save_path", type=str)
     parser.add_argument("--max_seq_length", type=int, default=2048)
     args = parser.parse_args()
 
-    tokenizer = transformers.LLaMATokenizer.from_pretrained(args.tokenizer_path)
+    tokenizer = transformers.LlamaTokenizer.from_pretrained(args.tokenizer_path)
 
+
+    convert_text(args.text_path)
+    
     all_tokenized = []
-    for elem in tqdm.tqdm(read_jsonl(args.jsonl_path)):
+    for elem in tqdm.tqdm(read_jsonl("converted.jsonl")):
         all_tokenized.append(tokenizer.encode(elem["text"]))
     random.shuffle(all_tokenized)
 

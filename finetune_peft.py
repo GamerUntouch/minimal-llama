@@ -113,7 +113,7 @@ def main():
     dataset = datasets.load_from_disk(finetune_args.dataset_path)
 
     print("Setup Model")
-    model = transformers.LLaMAForCausalLM.from_pretrained(
+    model = transformers.LlamaForCausalLM.from_pretrained(
         finetune_args.model_path,
         load_in_8bit=True,
         device_map='auto',
@@ -125,6 +125,7 @@ def main():
 
     print("Setup PEFT")
     peft_config = get_peft_config(peft_args=peft_args)
+
     model = get_peft_model(model, peft_config)
 
     print("Train")
@@ -137,6 +138,11 @@ def main():
     trainer.train()
     save_tunable_parameters(model, os.path.join(training_args.output_dir, "params.p"))
 
+    # Save the LoraConfig
+    peft_config.save_pretrained(training_args.output_dir)
+
+    # Save the model
+    model.save_pretrained(training_args.output_dir)
 
 if __name__ == "__main__":
     main()
