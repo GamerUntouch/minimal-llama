@@ -55,7 +55,7 @@ You can generate using the trained PEFT params using something like the followin
 ```bash
 python test_peft.py \
     --model_path /path/to/llama-7b/ \
-    --peft_path /path/to/peft.p \
+    --peft_path /path/to/peft \
     --tokenizer_path /path/to/tozenizer \
     --test_input "input text" \
 ````
