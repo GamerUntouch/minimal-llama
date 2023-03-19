@@ -16,12 +16,15 @@ def main():
  
     torch.set_default_tensor_type(torch.cuda.HalfTensor)
     model = transformers.LlamaForCausalLM.from_pretrained(args.model_path)
+    
     peft_config = get_peft_config(peft_args=PEFTArguments(peft_mode="lora"))
     model = get_peft_model(model, peft_config)
     model.load_state_dict(torch.load(args.peft_path), strict=False)
     torch.set_default_tensor_type(torch.cuda.FloatTensor)
 
-    tokenizer = transformers.LLaMATokenizer.from_pretrained(args.tokenizer_path)
+    print("Generating...")
+    
+    tokenizer = transformers.LlamaTokenizer.from_pretrained(args.tokenizer_path)
     batch = tokenizer(args.test_input, return_tensors="pt")
 
     with torch.no_grad():
