@@ -64,7 +64,7 @@ def main():
     print_rank0("Setup Data")
     train_ds = DatasetDataset(datasets.load_from_disk(args.dataset_path))
     print_rank0("Setup Model")
-    pipeline_model = PipelineLLaMA(
+    pipeline_model = PipelineLlama(
         model_args,
         num_stages=args.pipeline_parallel_size,
     )
