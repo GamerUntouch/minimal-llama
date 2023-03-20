@@ -23,11 +23,11 @@ def main():
 
     peft_config = PeftConfig.from_pretrained(args.peft_path)
     
-    model = transformers.LlamaForCausalLM.from_pretrained(args.model_path)
+    base_model = transformers.LlamaForCausalLM.from_pretrained(args.model_path)
     tokenizer = transformers.LlamaTokenizer.from_pretrained(args.tokenizer_path)
 
     # Load the LoRA model
-    model = PeftModel.from_pretrained(model, args.peft_path)
+    model = PeftModel.from_pretrained(base_model, args.peft_path)
     model.eval()
 
     key_list = [key for key, _ in model.base_model.model.named_modules() if "lora" not in key]
@@ -42,7 +42,7 @@ def main():
 
     model.save_pretrained(args.output_path)
 
-    print("Merged and saved to" + args.output_path + ".")
+    print("Merged and saved to " + args.output_path + ".")
     
 if __name__ == "__main__":
     main()

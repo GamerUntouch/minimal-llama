@@ -91,20 +91,33 @@ The above configuration uses about 30-35GB of RAM per GPU across 8 GPUs.
 Here, we combine PEFT training with pipeline parallel to train with large models. See [PEFT Fine-tuning with 8-bit](#peft-fine-tuning-with-8-bit) for more details.
 
 ```bash
-python finetune_pp_peft.py \
-    --model_path /path/to/llama-30b/ \
+python finetune_pp.py \
+    --model_path /path/to/llama-7b/ \
     --dataset_path /path/to/tokenized_dataset \
     --save_dir /path/to/save \
     --batch_size 4 \
-    --learning_rate 5e-5 \
-    --gradient_accumulation_steps 1 \
+    --gradient_accumulation_steps 2 \
     --save_interval 2000 \
-    --num_train_steps 20000 \
-    --peft_mode lora \
-    --lora_rank 8
+    --num_train_steps 20000
 ```
 
+
 For instance, you can fine-tune LoRA on 65B LLaMA with about 120GB of memory in total (e.g. 15GB each on 8 GPUs, or 60GB on 2 GPUs) with batch size=1 and sequence length = 512.
+
+## Merging LoRAs and Base Models
+
+**Potentially doesn't work? Might be saving as 16-bit.***
+Hasn't been thoroughly tested, but the following script will merge base models (8 bit converted) and LoRAs.
+
+```bash
+python lora_merge.py \
+    --model_path /path/to/llama-7b/ \
+    --peft_path /path/to/peft \
+    --output_path /path/to/output \
+    --tokenizer_path /path/to/tozenizer \
+```
+
+File sizes are inflated for an unknown reason, still undergoing testing.
 
 ## Misc Notes
 
