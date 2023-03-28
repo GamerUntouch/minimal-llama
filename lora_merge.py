@@ -38,7 +38,7 @@ def main():
             new_module = torch.nn.Linear(target.in_features, target.out_features, bias=bias)
             model.base_model._replace_module(parent, target_name, new_module, target)
 
-    model = model.base_model.model
+    model = model.base_model.model.half()
 
     model.save_pretrained(args.output_path)
 
