@@ -1,7 +1,7 @@
 safetensors==0.3.0
 datasets==2.10.1
 sentencepiece
-bitsandbytes
+bitsandbytes==0.37.2
 accelerate
-git+https://github.com/gameruntouch/transformers
+transformers==4.28.1
 git+https://github.com/zphang/peft@llama
