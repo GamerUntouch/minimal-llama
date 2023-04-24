@@ -106,8 +106,7 @@ For instance, you can fine-tune LoRA on 65B LLaMA with about 120GB of memory in 
 
 ## Merging LoRAs and Base Models
 
-**Potentially doesn't work? Might be saving as 16-bit.***
-Hasn't been thoroughly tested, but the following script will merge base models (8 bit converted) and LoRAs.
+Merges HF converted 8bit weights with LoRA configs. Takes an exceptional amount of RAM to load (30B, for example, requires 145GB+) so be warned.
 
 ```bash
 python lora_merge.py \
@@ -117,7 +116,7 @@ python lora_merge.py \
     --tokenizer_path /path/to/tozenizer \
 ```
 
-File sizes are inflated for an unknown reason, still undergoing testing.
+
 
 ## Misc Notes
 
